@@ -1,0 +1,9 @@
+This is where model results go, including:
+- region wide logreg models.RData
+- region wide logreg evaluation metric results.RData
+- FAR_selected.csv
+- ADD_selected.csv
+- AATQ_selected.csv
+- FATQ_selected.csv
+- WAATQ_selected.csv
+- WFATQ_selected.csv
