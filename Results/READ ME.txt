@@ -1,4 +1,4 @@
-This is where model results go, including:
+This folder is where model results go, including:
 - region wide logreg models.RData
 - region wide logreg evaluation metric results.RData
 - FAR_selected.csv
