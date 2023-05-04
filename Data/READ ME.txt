@@ -1,5 +1,0 @@
-This is where all your simulated data sets go, including:
-- simulated households.RData
-- simulated individuals.RData
-- simulated epidemic.RData
-- simulated model data.RData
