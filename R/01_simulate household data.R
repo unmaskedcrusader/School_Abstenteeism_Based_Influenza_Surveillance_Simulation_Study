@@ -21,7 +21,7 @@ prop.children.lone <- c(0.5857832, 0.3071523, 0.1070645) # lone parent with 1,2,
 # proportion of children that are elementary school age
 prop.children.elem.age <- 0.4976825
 
-# Proportion of households with chidlren
+# Proportion of households with children
 prop.household.with.children <- 0.4277052
 prop.household.without.children <- 1-prop.household.with.children
 
