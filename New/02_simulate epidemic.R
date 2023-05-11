@@ -4,10 +4,13 @@ set.seed(2021-04-03)
 
 load(file = "Data/simulated individuals.RData")
 
+individuals <- individuals[sample(nrow(individuals),1000),]
+
 #### Function to simulate 12 epidemics ####
 # simualte 2 extra epidemics incase we need to toss some due to unrealistic spread
 
 sim12epi <- function(b, sus, spar, numinf.catch){
+  
   par(mfcol=c(3,3))
   runs <- list()
   num.catch <- length(unique(individuals$catchID))
@@ -37,7 +40,7 @@ sim12epi <- function(b, sus, spar, numinf.catch){
                    , y=individuals$loc.y*2
                    , inftime = first.inf
                    , infperiod=rep(4, nrow(individuals)))
-    #plot(SIR, plottype = "curve", curvetype = "newinfect")
+    # plot(SIR, plottype = "curve", curvetype = "newinfect")
     runs[[i]]<- list(XYcoordinates = SIR$XYcoordinates, inftime = SIR$inftime, remtime = SIR$remtime, first.inf = first.inf, start = start)
   }
   par(mfcol=c(1,1))
@@ -59,7 +62,7 @@ epi_series10 <- sim12epi(b=3, sus=.0019, spar=0, numinf.catch = 2)
 
 #### Discard unreasonable epidemics ####
 
-# Function: Calculate infeciton rate
+# Function: Calculate infection rate
 sim.epi.infection.rate <- function(epidata){
   num.infected <- sum(epidata$inftime > 0)
   num.atrisk <- length(epidata$inftime)

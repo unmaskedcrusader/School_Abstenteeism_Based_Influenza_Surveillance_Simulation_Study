@@ -4,7 +4,8 @@ library(zoo)
 #### Create Laboratory Confirmed Case Data set ####
 # Output: Number of lab confirmed cases each day of the study period
 #   per catchment area
-# Input: simulated epidemic, indiviudal information
+# Input: simulated epidemic, individual information
+
 sim.lab.confirm <- function(epidata, individual.data){
   
   #combine dataframes to have individual and infection information
@@ -43,10 +44,10 @@ sim.absent <- function(epidata, individual.data){
   epidata.df <- cbind(individual.data, inftime = epidata$inftime, remtime = epidata$remtime)
 
   #school information
-  schoolkids <- epidata.df[epidata.df$elemchild.ind == 1,]
+  schoolkids <- epidata.df[epidata.df$elem.child.ind == 1,]
   num.schoolkids <- nrow(schoolkids)
   num.schools <- length(unique(schoolkids$schoolID))
-  school.pop <- aggregate(elemchild.ind ~ schoolID, data=schoolkids, FUN=sum)
+  school.pop <- aggregate(elem.child.ind ~ schoolID, data=schoolkids, FUN=sum)
   names(school.pop)[2] <- "school.population"
   
   # For every day in the school year, simulate if each child is absent or not
@@ -87,7 +88,7 @@ sim.actual.case <- function(epidata, individual.data){
   
   # number of students that had influenza
     #note: this is not needed for modelling, this is just additional information
-  elemkids <- epidata.df[epidata.df$elemchild.ind == 1,]
+  elemkids <- epidata.df[epidata.df$elem.child.ind == 1,]
   cases.elemkids <- aggregate(case ~ inftime + catchID, data=elemkids, FUN=sum)
   
   # Aggregate data, such that we have the number of influenza cases each day of the study period

@@ -66,8 +66,8 @@ sim.school.data <- merge(school.to.catchment.map, sim.catchment.data[,c("catchID
 
 n1 <- sum(sim.school.data$schoolpop)*5 #not sure how many households are needed to meet school population sizes, so simulate more than needed.  Extra will be removed.
 
-# Random number generation to determine partent type (lone or couple), 
-#     number of children within household given partent type, and
+# Random number generation to determine parent type (lone or couple), 
+#     number of children within household given parent type, and
 #     if each child is elementary school age or not
 unif.parent.type <- runif(n1)
 unif.child.num <- runif(n1)
@@ -97,7 +97,7 @@ house.with.children <- data.frame(houseID = seq.int(length(parent.type))
                                   , num.elem.child = num.elem.child
                                   , schoolID = rep(0, length(parent.type)))
 
-# Assign elementary aged children to elemntary schools 
+# Assign elementary aged children to elementary schools 
 #     such that the school population is met
 start <- 0
 stop <-0
@@ -125,7 +125,7 @@ house.with.children <- merge(house.with.children, sim.school.data, by = "schoolI
 house.with.children$num.people <- house.with.children$num.child + house.with.children$num.parent
 
 
-#### Simulate Sub-Population 2: households with children ####
+#### Simulate Sub-Population 2: households without children ####
 
 # Calculate the household size proportions for households without children.  
 #     Based on the overall household size proportions from the census, 
@@ -152,6 +152,7 @@ n2 <- sum(catchment.household.count$num.household.no.children)
 
 # Simulate household size for households without children
 unif.household.size <- runif(n2)
+
 household.size <- ifelse(unif.household.size <= prop.household.size.nochildren[1], 1,  
                                      ifelse(unif.household.size <= sum(prop.household.size.nochildren[1:2]), 2
                                             , ifelse(unif.household.size <= sum(prop.household.size.nochildren[1:3]), 3
@@ -190,13 +191,13 @@ households <- rbind(households1, households2)
 households$loc.x <- runif(nrow(households), households$xstart, households$xend)
 households$loc.y <- runif(nrow(households), households$ystart, households$yend)
 
-#### Create individuals dataframe (one row per individual)  ####
+#### Create individuals data frame (one row per individual)  ####
 
 individuals <- expandRows(households, "num.people", drop=FALSE)
 rownames(individuals) <- c() #remove row names
 individuals$individualID <- seq.int(nrow(individuals))
 
-# Create elementry school child indicator
+# Create elementary school child indicator
 individuals$elem.child.ind <- 0 
 for(i in unique(individuals$houseID)){
   num.elem <- individuals[which(individuals$houseID == i), "num.elem.child"][1]
@@ -208,6 +209,8 @@ for(i in unique(individuals$houseID)){
 # TEST: make sure the number of elem.child.ind is equal to the number of elementary school children
 sum(individuals$elem.child.ind) == sum(households$num.elem.child)
 
-#### SAVE DATA ####
+individuals <- households[rep(row.names(households), households$num.people),]
+
+### SAVE DATA ####
 save(individuals, file = "Data/simulated individuals.RData")
 save(households, file = "Data/simulated households.RData")
