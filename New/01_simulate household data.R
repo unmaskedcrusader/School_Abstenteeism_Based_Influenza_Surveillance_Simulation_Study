@@ -125,7 +125,7 @@ house.with.children <- merge(house.with.children, sim.school.data, by = "schoolI
 house.with.children$num.people <- house.with.children$num.child + house.with.children$num.parent
 
 
-#### Simulate Sub-Population 2: households with children ####
+#### Simulate Sub-Population 2: households without children ####
 
 # Calculate the household size proportions for households without children.  
 #     Based on the overall household size proportions from the census, 
@@ -162,7 +162,9 @@ house.no.children <- data.frame(houseID = nrow(house.with.children) + seq.int(n2
                                 , num.people = household.size
                                 , catchID = rep(0, n2))
 
-# Assign households without children to catchment areas
+
+
+##### Assign households without children to catchment areas ####
 stop <- 0
 for(i in 1:nrow(catchment.household.count)){
   start <- stop + 1
